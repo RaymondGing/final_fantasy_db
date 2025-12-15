@@ -1,0 +1,7 @@
+# Ignore real database credentials
+includes/db.php
+includes/db.local.php
+
+# OS junk
+.DS_Store
+Thumbs.db
