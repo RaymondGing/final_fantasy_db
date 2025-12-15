@@ -1,0 +1,815 @@
+/* =========================================================
+   GLOBAL RESET & BASE
+   ========================================================= */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+        url('../images/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #f9fafb;
+    line-height: 1.4;
+    min-height: 100vh;
+}
+
+/* =========================================================
+   TYPOGRAPHY
+   ========================================================= */
+h1, h2, h3 {
+    font-family: "Georgia", "Times New Roman", serif;
+    letter-spacing: 0.04em;
+    color: #f9fafb;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+h1 { font-size: 2rem; }
+h2 { font-size: 1.3rem; }
+h3 { font-size: 1.05rem; }
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+nav {
+    background: #181820;
+    padding: 0.8rem 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+nav a {
+    color: #f5f5f5;
+    text-decoration: none;
+    font-weight: 500;
+}
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* =========================================================
+   GENERIC PAGE WRAPPERS / PANELS
+   ========================================================= */
+.page {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem 2rem;
+}
+
+.page h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.battle-page h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.panel {
+    background: #181822;
+    border-radius: 12px;
+    border: 1px solid #242437;
+    padding: 1rem;
+}
+
+/* =========================================================
+   TEAM BUILDER LAYOUT
+   ========================================================= */
+.team-builder-layout {
+    display: grid;
+    grid-template-columns: 2fr 1.4fr;
+    gap: 1.5rem;
+}
+@media (max-width: 900px) {
+    .team-builder-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================================
+   CHARACTER LIST PAGE — CARD GRID
+   ========================================================= */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+
+.character-card {
+    background: #1c1c26;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    border: 1px solid #2a2a36;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.card-header {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.portrait {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+    background: #000;
+}
+
+.character-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #f9fafb;
+}
+
+.character-meta {
+    font-size: 0.85rem;
+    color: #c5c5dd;
+    margin-top: 0.2rem;
+}
+
+/* Role pill */
+.role-pill {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-left: 0.25rem;
+}
+
+/* Role-based colours */
+.role-tank            .role-pill { background:#3a4a63; color:#e2f0ff; }
+.role-melee-physical  .role-pill { background:#5b2b2b; color:#ffe5e5; }
+.role-ranged-physical .role-pill { background:#4b3b2b; color:#ffeeda; }
+.role-black-mage      .role-pill { background:#3b2b5b; color:#f0e5ff; }
+.role-white-mage      .role-pill { background:#2f4b3b; color:#e5fff0; }
+.role-support         .role-pill { background:#264954; color:#e3fbff; }
+
+/* =========================================================
+   STATS SECTION (CHARACTER LIST)
+   Uses CSS variable --value (1–9) for bar width.
+   ========================================================= */
+.card-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-top: 0.2rem;
+}
+.stat-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+}
+.stat-label {
+    width: 50px;
+    color: #e4e4ff;
+}
+.stat-bar {
+    flex: 1;
+    height: 6px;
+    border-radius: 999px;
+    background: #26263a;
+    overflow: hidden;
+}
+.stat-fill {
+    height: 100%;
+    width: calc(var(--value) * 11%); /* 1–9 => ~11%–99% */
+    background: linear-gradient(90deg, #ffd66b, #ff8c42);
+}
+.stat-value {
+    width: 32px;
+    text-align: right;
+    color: #f1f1ff;
+    font-size: 0.75rem;
+}
+
+/* =========================================================
+   CARD ACTIONS + GENERIC BUTTONS
+   ========================================================= */
+.card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.btn {
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    border: none;
+    font-size: 0.8rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: 500;
+    background: #4b5563;
+    color: #f9fafb;
+    transition:
+        background 0.12s ease,
+        transform 0.08s ease,
+        box-shadow 0.08s ease;
+}
+.btn:hover:not(:disabled) {
+    background: #6b7280;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+}
+.btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Button variants – list page CRUD */
+.btn-edit   { background:#2f6fed; color:#fff; }
+.btn-delete { background:#b53030; color:#fff; }
+.btn-edit:hover:not(:disabled)   { background:#2556bb; }
+.btn-delete:hover:not(:disabled) { background:#8e2525; }
+
+/* Button variants – team builder / battle */
+.btn-add {
+    background: #10b981;
+    color: #f9fafb;
+}
+.btn-add:hover:not(:disabled) { background:#059669; }
+
+.btn-remove {
+    background: #ef4444;
+    color: #fff;
+}
+.btn-remove:hover:not(:disabled) { background:#dc2626; }
+
+.btn-clear {
+    background: #6b7280;
+    color: #fff;
+}
+
+.btn-pill-primary {
+    background: #22c55e;
+    color: #fff;
+}
+.btn-pill-primary:hover:not(:disabled) { background:#16a34a; }
+
+/* =========================================================
+   TEAM BUILDER LEFT SIDE — CHARACTER SELECTION GRID
+   ========================================================= */
+.character-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 0.75rem;
+}
+.char-card {
+    background: #14141f;
+    border-radius: 10px;
+    border: 1px solid #222232;
+    padding: 0.5rem;
+    text-align: center;
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease,
+        border-color 0.12s ease;
+}
+.char-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    border-color: #22c55e;
+}
+.char-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 0.35rem;
+}
+.role-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 0.12rem 0.5rem;
+    border-radius: 999px;
+    background: #111827;
+    color: #f3f4ff;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Filter bar */
+.filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+.filter-bar select,
+.filter-bar input[type="text"] {
+    padding: 0.35rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid #374151;
+    background: #101018;
+    color: #f9fafb;
+    font-size: 0.85rem;
+}
+.filter-bar select:focus,
+.filter-bar input[type="text"]:focus {
+    outline: none;
+    border-color: #22c55e;
+}
+
+/* =========================================================
+   TEAM BUILDER RIGHT SIDE — CURRENT PARTY + STATS
+   ========================================================= */
+.team-list-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
+}
+.team-list-item img {
+    width: 46px;
+    height: 46px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #111827;
+}
+.team-member-meta {
+    flex: 1;
+    font-size: 0.85rem;
+}
+.team-member-meta span {
+    opacity: 0.85;
+    color: #d4d4e8;
+}
+
+.panel .stat-row {
+    border-bottom: 1px solid rgba(15,23,42,0.7);
+}
+.panel .stat-row:last-child {
+    border-bottom: none;
+}
+
+/* =========================================================
+   EMERALD FEEDBACK & ROLE WARNINGS
+   ========================================================= */
+.emerald-success,
+.emerald-fail,
+.role-warnings {
+    margin-top: 0.75rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+.emerald-success {
+    background: #064e3b;
+    color: #a7f3d0;
+}
+.emerald-fail {
+    background: #7f1d1d;
+    color: #fecaca;
+}
+.role-warnings {
+    background: #312e81;
+    color: #e0e7ff;
+    font-size: 0.85rem;
+    text-align: left;
+}
+.role-warnings h3 {
+    text-align: center;
+}
+
+/* =========================================================
+   BATTLE PAGE — LAYOUT & FORMATION
+   ========================================================= */
+.battle-layout {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+@media (max-width: 900px) {
+    .battle-layout {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+/* Party side */
+.battle-party {
+    flex: 1.2;
+}
+
+/* 5-slot formation: 2 on top, 3 on bottom */
+.battle-party-row {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    justify-items: center;
+    align-items: center;
+    gap: 1.4rem 2rem;
+    margin: 1.5rem 0 2rem;
+}
+.battle-char-card {
+    position: relative;
+    text-align: center;
+    width: 130px;
+}
+.battle-char-card:nth-child(1) { grid-column: 2; grid-row: 1; }
+.battle-char-card:nth-child(2) { grid-column: 4; grid-row: 1; }
+.battle-char-card:nth-child(3) { grid-column: 1; grid-row: 2; }
+.battle-char-card:nth-child(4) { grid-column: 3; grid-row: 2; }
+.battle-char-card:nth-child(5) { grid-column: 5; grid-row: 2; }
+
+.battle-portrait {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #111827;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.55);
+    margin-bottom: 0.4rem;
+}
+.battle-name-tag {
+    background: rgba(15, 23, 42, 0.85);
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+}
+
+@media (max-width: 600px) {
+    .battle-party-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+    }
+    .battle-portrait {
+        width: 96px;
+        height: 96px;
+    }
+}
+
+/* Emerald side */
+.battle-emerald-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+.emerald-card {
+    background: transparent;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+    position: relative;
+    overflow: visible;
+}
+
+/* Emerald image */
+.emerald-portrait {
+    max-width: 720px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 0;
+    display: block;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.9));
+    transition: opacity 0.5s ease-in-out;
+    opacity: 1;
+}
+.emerald-portrait.fade-out {
+    opacity: 0;
+}
+.emerald-portrait.defeated {
+    opacity: 0.8;
+}
+
+/* Combat narration */
+.combat-sequence {
+    min-height: 150px;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.combat-number {
+    max-width: 380px;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    font-weight: 600;
+    text-align: center;
+    color: #f97316;
+    opacity: 0;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+}
+.combat-animate {
+    animation: combatFloat 4.5s ease-out forwards;
+}
+@keyframes combatFloat {
+    0%   { opacity: 0; transform: translateY(10px) scale(1.0); }
+    25%  { opacity: 1; transform: translateY(-4px) scale(1.02); }
+    100% { opacity: 0; transform: translateY(-18px) scale(1.06); }
+}
+
+/* Floating damage / heal numbers */
+.float-number {
+    position: absolute;
+    font-size: 1.7rem;
+    font-weight: 750;
+    pointer-events: none;
+    animation: floatUp 1s ease-out forwards;
+}
+.float-damage {
+    color: #ff0000;
+    font-weight: 950;
+    text-shadow: 0 0 18px rgb(0, 0, 0);
+}
+.float-heal {
+    color: #00ff5a;
+    font-weight: 950;
+    text-shadow: 0 0 18px rgb(0, 0, 0);
+}
+@keyframes floatUp {
+    0%   { transform: translateY(0);   opacity: 0; }
+    20%  { opacity: 1; }
+    100% { transform: translateY(-40px); opacity: 0; }
+}
+
+/* Battle result / flavour */
+.battle-flavour {
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    text-align: center;
+    opacity: 0.9;
+}
+.battle-result,
+.victory-panel {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    background: #065f46;
+    color: #ecfdf5;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Utility */
+.hidden {
+    display: none !important;
+}
+
+/* =========================================================
+   HOME PAGE — HERO + VIDEO
+   ========================================================= */
+.page-wrapper {
+    max-width: 1400px;
+    margin: 4rem auto 3rem;
+    padding: 2rem 2.5rem 2.5rem;
+    background: radial-gradient(circle at top, rgba(248, 250, 252, 0.12), transparent 55%),
+                rgba(15, 23, 42, 0.8);
+    border-radius: 18px;
+    box-shadow:
+        0 44px 104px rgba(0, 0, 0, 0.9),
+        0 0 150px rgba(251, 191, 36, 0.45),
+        0 0 254px rgba(251, 191, 36, 0.35);
+    backdrop-filter: blur(4px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.2rem;
+    animation:
+        homeFadeUp 0.9s ease-out forwards,
+        glowPulse 4.5s ease-in-out infinite;
+}
+.page-wrapper h1 {
+    text-transform: uppercase;
+    font-size: 2.3rem;
+    letter-spacing: 0.08em;
+}
+.page-wrapper h1::after {
+    content: "";
+    display: block;
+    width: 140px;
+    height: 5px;
+    margin: 0.75rem auto 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #fbbf24, #f97316);
+}
+.page-wrapper p {
+    font-size: 1rem;
+    opacity: 0.95;
+}
+.page-wrapper iframe {
+    display: block;
+    width: 100%;
+    max-width: 720px;
+    aspect-ratio: 16 / 9;
+    border: none;
+    margin-top: 0.5rem;
+    border-radius: 14px;
+    box-shadow:
+        0 0 0 2px rgba(15, 23, 42, 0.9),
+        0 20px 40px rgba(0, 0, 0, 0.9);
+    background: radial-gradient(circle at 20% 0, #1f2937, #020617);
+}
+
+/* Homepage animations */
+@keyframes homeFadeUp {
+    from { opacity: 0; transform: translateY(18px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes glowPulse {
+    0%, 100% {
+        box-shadow:
+            0 22px 40px rgba(0, 0, 0, 0.75),
+            0 0 55px rgba(251, 191, 36, 0.20);
+    }
+    50% {
+        box-shadow:
+            0 22px 40px rgba(0, 0, 0, 0.75),
+            0 0 85px rgba(251, 191, 36, 0.35);
+    }
+}
+
+@media (max-width: 700px) {
+    .page-wrapper {
+        margin: 3rem 1rem 2rem;
+        padding: 1.5rem 1.25rem 2rem;
+    }
+    .page-wrapper h1 { font-size: 1.9rem; }
+    .page-wrapper p  { font-size: 0.95rem; }
+}
+
+/* Wide hero variant */
+.home-hero {
+    max-width: 1100px !important;
+    padding: 2.5rem 3rem 3rem;
+}
+.home-hero h1::after {
+    width: 180px;
+    height: 4px;
+    box-shadow: 0 0 22px rgba(255, 140, 0, 0.8);
+}
+.home-hero iframe {
+    max-width: 900px;
+}
+
+/* =========================================================
+   HOME PAGE STATS ROW (DASHBOARD)
+   ========================================================= */
+.home-stats {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+}
+.home-stats .stat-card {
+    background: rgba(15, 23, 42, 0.9);
+    border-radius: 1.5rem;
+    padding: 1rem 1.75rem;
+    min-width: 180px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(251, 191, 36, 0.35);
+}
+.home-stats .stat-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+.home-stats .stat-value {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 2rem;
+    font-weight: 700;
+}
+.home-stats .stat-caption {
+    margin-top: 0.25rem;
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+@media (max-width: 768px) {
+    .home-stats {
+        gap: 1rem;
+    }
+    .home-stats .stat-card {
+        min-width: 45%;
+    }
+}
+
+/* =========================================================
+   HOME PAGE – FEATURED HEROES MINI-CAROUSEL
+   Works with: .home-featured > h2 + .home-featured-grid
+   ========================================================= */
+.home-featured {
+    margin-top: 2.5rem;
+    width: 100%;
+    text-align: center;
+}
+
+.home-featured h2 {
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin-bottom: 1.25rem;
+}
+
+/* Horizontal “mini-carousel”: 3 cards, scrollable on small screens */
+.home-featured-grid {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: stretch;
+    overflow-x: auto;              /* allows swipe / scroll on mobile */
+    padding-bottom: 0.5rem;
+    scroll-snap-type: x mandatory; /* snap feels carousely */
+}
+
+/* Hide scrollbar on WebKit, keep it subtle elsewhere */
+.home-featured-grid::-webkit-scrollbar {
+    height: 6px;
+}
+.home-featured-grid::-webkit-scrollbar-track {
+    background: transparent;
+}
+.home-featured-grid::-webkit-scrollbar-thumb {
+    background: rgba(15, 23, 42, 0.8);
+    border-radius: 999px;
+}
+
+.home-feature-card {
+    scroll-snap-align: start;
+    flex: 0 0 230px;  /* width of each card */
+    background: rgba(15, 23, 42, 0.95);
+    border-radius: 1.2rem;
+    padding: 0.8rem 0.9rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border: 1px solid #1f2937;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease,
+        border-color 0.12s ease;
+}
+.home-feature-card:hover {
+    transform: translateY(-3px);
+    border-color: #fbbf24;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.9);
+}
+
+.home-feature-card img {
+    width: 100%;
+    height: 190px;
+    object-fit: contain;        /* preserves your original art */
+    border-radius: 0.9rem;
+    background: #020617;
+    margin-bottom: 0.55rem;
+}
+
+.home-feature-body {
+    font-size: 0.85rem;
+}
+
+.home-feature-name {
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+}
+
+.home-feature-meta {
+    font-size: 0.75rem;
+    opacity: 0.9;
+}
+
+.home-feature-role {
+    display: inline-block;
+    margin-left: 0.3rem;
+    padding: 0.1rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: #111827;
+    color: #e5e7ff;
+}
+
+/* On very small screens let cards be a bit wider */
+@media (max-width: 600px) {
+    .home-feature-card {
+        flex-basis: 70%;
+    }
+}
