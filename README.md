@@ -50,4 +50,34 @@ The schema is designed to support relational integrity and future extensibility.
 
 ---
 
-## Running the Project L
+## Running the Project Locally
+
+This project is designed to run locally in a PHP and MySQL environment such as MAMP, XAMPP, or similar.
+
+1. Clone the repository
+2. Place the project folder in your server root directory  
+   Example: `htdocs` or `www`
+3. Create a MySQL database named `ff_characters`
+4. Import the provided `ff_characters.sql` file
+5. Copy `includes/db.example.php` to `includes/db.php`
+6. Update database credentials in `includes/db.php`
+7. Open the project in a browser  
+   `http://localhost/final_fantasy_db/index.php`
+
+---
+
+## Notes on Hosting
+
+GitHub hosts the source code only.  
+Because the project uses PHP, MySQL, and sessions, it must be run in a server environment and cannot be executed directly via GitHub Pages.
+
+---
+
+## Learning Outcomes Demonstrated
+
+- Server side application structure in PHP
+- Relational database design and usage
+- Procedural MySQLi with prepared statements
+- State management using sessions
+- Separation of concerns through includes and reusable components
+- Translating a functional specification into a working application
